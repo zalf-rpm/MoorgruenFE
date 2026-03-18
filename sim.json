@@ -1,0 +1,60 @@
+{
+	"climate.csv": "",
+	"site.json": "",
+	"crop.json": "",
+	"climate.csv-options": {
+		"start-date": "0001-04-03",
+		"csv-separator": "\t",
+		"no-of-climate-file-header-lines": 1,
+		"header-to-acd-names": {
+			"Date": "iso-date",
+			"TempMin": "tmin",
+			"TempMean": "tavg",
+			"TempMax": "tmax",
+            "Precipitation": "precip",
+            "RelHumCalc": "relhumid",
+			"Radiation": ["globrad", "/", 1000.0],
+			"Windspeed": "wind"
+		}
+	},
+	"debug?": false,
+	"output": {
+		"write-file?": true,
+		"path-to-output": "",
+		"file-name": "sim-large.csv",
+		"obj-outputs?": true,
+		"csv-options": {
+			"include-header-row": true,
+			"include-units-row": true,
+			"csv-separator": ","
+		},
+		"events": [
+			"daily", [
+				"Date",
+				"Crop",
+				"Stage",
+				"AbBiom",
+				["OrgBiom|RootBiomass", "Root"],
+				"NPP",
+				"GPP",
+				"Ra",
+				["Ra|RaRoot", "Root"],
+				["Ra|RaLeaf", "Leaf"],
+				["Ra|RaShoot", "Shoot"],
+				["CBal", [1, 4]],
+				["SOC", [1, 20]],
+				["SOC-X-Y", [1, 20]]
+			]
+		]
+	},
+	"include-file-base-path": "data/",
+	"NitrogenResponseOn": true,
+	"EmergenceMoistureControlOn": false,
+	"EmergenceFloodingControlOn": false,
+	"WaterDeficitResponseOn": true,
+	"NumberOfLayers": 20,
+	"LayerThickness": [0.1, "m"],
+	"UseSecondaryYields": true,
+	"UseAutomaticIrrigation": false,
+	"UseNMinMineralFertilisingMethod": false
+}

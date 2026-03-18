@@ -1,0 +1,169 @@
+{
+	"crops": {
+		"GR": {
+			"is-winter-crop": false,
+            "is-perennial-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/Grass_Species4.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/cultivar/Grass_CLV4.json"],
+				"species": ["include-from-file", "monica-parameters/crops/species/Grass_Species4.json"]
+            }
+		}
+	},
+
+	"fert-params": {
+		"AN": ["include-from-file", "monica-parameters/mineral-fertilisers/AN.json"]
+	},
+
+	"fert_min_template": {
+		"date": "0000-05-16",
+		"type": "MineralFertilization",
+		"amount": [20.0, "kg N"],
+		"partition": {
+			"Carbamid":0,
+			"NH4":0.5,
+			"NO3":0.5
+		  }
+	},
+
+	"cropRotationTemplates": {
+		"GR": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "GR"],
+					"date": "0000-03-01"
+				},
+				{
+					"type": "Cutting",
+					"date": "0000-06-15",
+                    "organs": {
+                        "Leaf": [
+                            0.15,
+                            "m2 m-2",
+                            "left"
+                        ],
+                        "Shoot": [
+                            100,
+                            "kg ha-1",
+                            "left"
+                        ]
+                    },
+                    "export": {
+                        "Leaf": [
+                            100,
+                            "%"
+                        ],
+                        "Shoot": [
+                            100,
+                            "%"
+                        ],
+                        "Fruit": [
+                            0,
+                            "%"
+                        ]
+                    }
+                },
+                {
+					"type": "NDemandFertilization",
+					"date": "0000-06-20",
+					"N-demand": [20.0, "kg"],
+					"depth": [0.3, "m"],
+                    "partition": {
+                        "Carbamid":0,
+                        "NH4":0.5,
+                        "NO3":0.5
+                      }
+				},
+                {
+					"type": "Cutting",
+					"date": "0000-08-15",
+                    "organs": {
+                        "Leaf": [
+                            0.15,
+                            "m2 m-2",
+                            "left"
+                        ],
+                        "Shoot": [
+                            100,
+                            "kg ha-1",
+                            "left"
+                        ]
+                    },
+                    "export": {
+                        "Leaf": [
+                            100,
+                            "%"
+                        ],
+                        "Shoot": [
+                            100,
+                            "%"
+                        ],
+                        "Fruit": [
+                            0,
+                            "%"
+                        ]
+                    }
+                },
+                {
+					"type": "NDemandFertilization",
+					"date": "0000-08-20",
+					"N-demand": [20.0, "kg"],
+					"depth": [0.3, "m"],
+                    "partition": {
+                        "Carbamid":0,
+                        "NH4":0.5,
+                        "NO3":0.5
+                      }
+				},
+                {
+					"type": "Cutting",
+					"date": "0000-10-15",
+                    "organs": {
+                        "Leaf": [
+                            0.15,
+                            "m2 m-2",
+                            "left"
+                        ],
+                        "Shoot": [
+                            100,
+                            "kg ha-1",
+                            "left"
+                        ]
+                    },
+                    "export": {
+                        "Leaf": [
+                            100,
+                            "%"
+                        ],
+                        "Shoot": [
+                            100,
+                            "%"
+                        ],
+                        "Fruit": [
+                            0,
+                            "%"
+                        ]
+                    }
+                },
+                {
+					"type": "NDemandFertilization",
+					"date": "0000-10-20",
+					"N-demand": [20.0, "kg"],
+					"depth": [0.3, "m"],
+                    "partition": {
+                        "Carbamid":0,
+                        "NH4":0.5,
+                        "NO3":0.5
+                      }
+				}
+			]
+		}]
+	},
+
+	"cropRotation": ["ref", "cropRotationTemplates", "GR"],
+
+	"CropParameters": {
+		"=": ["include-from-file", "monica-parameters/general/crop.json"]
+	}
+}
