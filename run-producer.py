@@ -77,7 +77,7 @@ def run_producer(server=None, port=None):
         layer = {
             "Thickness": [thickness, "m"],
             "SoilBulkDensity": [float(row['Bulk_density']) , "kg/m3"],
-            "SoilOrganicCarbon": [float(row['Corg']) / 100.0, "%"],
+            "SoilOrganicCarbon": [float(row['Corg']), "%"],
             "Clay": [float(row['Clay']), "m3/m3"],
             "Sand": [float(row['Sand']), "m3/m3"],
             "Silt": [float(row['Silt']), "m3/m3"],
