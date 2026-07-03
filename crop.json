@@ -65,19 +65,8 @@
                     }
                 },
                 {
-					"type": "NDemandFertilization",
-					"date": "0000-06-20",
-					"N-demand": [20.0, "kg"],
-					"depth": [0.3, "m"],
-                    "partition": {
-                        "Carbamid":0,
-                        "NH4":0.5,
-                        "NO3":0.5
-                      }
-				},
-                {
 					"type": "Cutting",
-					"date": "0000-08-15",
+					"date": "0000-09-01",
                     "organs": {
                         "Leaf": [
                             0.15,
@@ -104,59 +93,7 @@
                             "%"
                         ]
                     }
-                },
-                {
-					"type": "NDemandFertilization",
-					"date": "0000-08-20",
-					"N-demand": [20.0, "kg"],
-					"depth": [0.3, "m"],
-                    "partition": {
-                        "Carbamid":0,
-                        "NH4":0.5,
-                        "NO3":0.5
-                      }
-				},
-                {
-					"type": "Cutting",
-					"date": "0000-10-15",
-                    "organs": {
-                        "Leaf": [
-                            0.15,
-                            "m2 m-2",
-                            "left"
-                        ],
-                        "Shoot": [
-                            100,
-                            "kg ha-1",
-                            "left"
-                        ]
-                    },
-                    "export": {
-                        "Leaf": [
-                            100,
-                            "%"
-                        ],
-                        "Shoot": [
-                            100,
-                            "%"
-                        ],
-                        "Fruit": [
-                            0,
-                            "%"
-                        ]
-                    }
-                },
-                {
-					"type": "NDemandFertilization",
-					"date": "0000-10-20",
-					"N-demand": [20.0, "kg"],
-					"depth": [0.3, "m"],
-                    "partition": {
-                        "Carbamid":0,
-                        "NH4":0.5,
-                        "NO3":0.5
-                      }
-				}
+                }
 			]
 		}]
 	},
