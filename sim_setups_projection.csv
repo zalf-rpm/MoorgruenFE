@@ -1,4 +1,4 @@
 id,gcm,rcm,scenario,ensmem,version,start_date,end_date,climate_path_to_latlon_file,climate_path_to_csvs
-1,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp26,r1i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
-2,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp45,r1i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
-3,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp85,r1i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+1,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp26,r12i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+2,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp45,r12i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+3,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp85,r12i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
