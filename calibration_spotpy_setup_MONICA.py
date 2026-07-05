@@ -101,16 +101,15 @@ def apply_crop_calibration_parameters(crop_params, params):
     for pname, pval in params.items():
         base_name = pname.rsplit("_", 1)[0] if pname.rsplit("_", 1)[-1].isdigit() else pname
 
-        if base_name in ["SpecificLeafArea", "DroughtStressThreshold", "StageKcFactor"]:
-            target = ps["cultivar"].get(base_name)
-            if isinstance(target, list):
-                for i in range(len(target)):
-                    target[i] *= pval
+        if base_name in ["SpecificLeafArea", "StageKcFactor"]:
+            for i in range(len(ps["cultivar"][base_name][0])):
+                ps["cultivar"][base_name][0][i] *= pval
+        elif base_name == "DroughtStressThreshold":
+            for i in range(len(ps["cultivar"][base_name])):
+                ps["cultivar"][base_name][i] *= pval
         elif base_name == "CropSpecificMaxRootingDepth":
             ps["cultivar"][base_name] = pval
-        else:
-            if base_name in ps.get("cultivar", {}) and isinstance(ps["cultivar"][base_name], (int, float)):
-                ps["cultivar"][base_name] *= pval
+
     return ps
 
 
@@ -364,5 +363,7 @@ class spot_setup(object):
     def evaluation(self):
         return self.obs_flat_list
 
-    def objectivefunction(self, simulation, evaluation):
+    def objectivefunction(self, simulation, evaluation, params=None):
+        if simulation is None:
+            raise RuntimeError("Simulation returned None.")
         return spotpy.objectivefunctions.rmse(evaluation, simulation)
