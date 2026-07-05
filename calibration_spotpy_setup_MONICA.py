@@ -293,6 +293,10 @@ class spot_setup(object):
                 continue
             try:
                 env = self._build_env_for_point(meta, params, sent_env_count)
+
+                if sent_env_count == 0:
+                    with open(f"{self.path_to_out}/first_env.json", "w") as f:
+                        json.dump(env, f, indent=2)
             except Exception as exc:
                 with open(self.path_to_prod_out_file, "a") as f:
                     f.write(f"Skipping point {exp_id}: {exc}\n")
@@ -306,7 +310,10 @@ class spot_setup(object):
         if sent_env_count > 0:
             last_env = copy.deepcopy(last_env)
             last_env["pathToClimateCSV"] = ""
-            last_env["customId"] = {"no_of_sent_envs": sent_env_count, "nodata": True, "shared-id": self.shared_id}
+            last_env["customId"] = {
+                "no_of_sent_envs": sent_env_count,
+                "nodata": True
+            }
             self.prod_socket.send_json(last_env)
 
         with open(self.path_to_prod_out_file, "a") as f:
