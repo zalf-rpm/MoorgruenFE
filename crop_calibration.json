@@ -7,7 +7,7 @@
                 "species": ["include-from-file", "crops/species/Grass_Species4.json"],
                 "cultivar": ["include-from-file", "crops/cultivar/Grass_CLV4.json"]
             },
-            "residueParams": ["include-from-file", "crops/residues/Grass_Species4.json"]
+            "residueParams": ["include-from-file", "crop-residues/Grass_Species4.json"]
         }
     },
     "fert-params": {
