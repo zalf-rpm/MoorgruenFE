@@ -138,7 +138,7 @@ class spot_setup(object):
         self.cons_socket = self.context.socket(zmq.DEALER)
         self.shared_id = str(uuid.uuid4())
         self.cons_socket.setsockopt_string(zmq.ROUTING_ID, self.shared_id)
-        self.cons_socket.RCVTIMEO = 60000
+        self.cons_socket.RCVTIMEO = 600000
         self.cons_socket.connect(f"tcp://{monicas_host}:{monicas_out_port}")
 
         os.makedirs(self.path_to_out, exist_ok=True)
