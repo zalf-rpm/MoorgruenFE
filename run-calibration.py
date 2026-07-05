@@ -141,6 +141,46 @@ def build_points_and_observations(config):
     return points, observations_by_exp_year
 
 
+def print_status_final(self, stream):
+    print("\n*** Final SPOTPY summary ***", file=stream)
+    print(
+        "Total Duration: "
+        + str(round((time.time() - self.starttime), 2))
+        + " seconds",
+        file=stream,
+    )
+    print("Total Repetitions:", self.rep, file=stream)
+
+    if self.optimization_direction == "minimize":
+        print("Minimal objective value: %g" % self.objectivefunction_min, file=stream)
+        print("Corresponding parameter setting:", file=stream)
+        for i in range(self.parameters):
+            text = "%s: %g" % (self.parnames[i], self.params_min[i])
+            print(text, file=stream)
+
+    if self.optimization_direction == "maximize":
+        print("Maximal objective value: %g" % self.objectivefunction_max, file=stream)
+        print("Corresponding parameter setting:", file=stream)
+        for i in range(self.parameters):
+            text = "%s: %g" % (self.parnames[i], self.params_max[i])
+            print(text, file=stream)
+
+    if self.optimization_direction == "grid":
+        print("Minimal objective value: %g" % self.objectivefunction_min, file=stream)
+        print("Corresponding parameter setting:", file=stream)
+        for i in range(self.parameters):
+            text = "%s: %g" % (self.parnames[i], self.params_min[i])
+            print(text, file=stream)
+
+        print("Maximal objective value: %g" % self.objectivefunction_max, file=stream)
+        print("Corresponding parameter setting:", file=stream)
+        for i in range(self.parameters):
+            text = "%s: %g" % (self.parnames[i], self.params_max[i])
+            print(text, file=stream)
+
+    print("******************************\n", file=stream)
+
+
 def run_calibration(server=None, prod_port=None, cons_port=None):
     config = {
         "mode": "hpc-local-remote",
@@ -207,7 +247,7 @@ def run_calibration(server=None, prod_port=None, cons_port=None):
         sampler.sample(rep, ngs=len(params) * 2 + 1, kstop=100, peps=0.0001, pcento=0.0001)
 
         with open(f"{path_to_out_folder}/best_setup{setup_id}.out", "a") as f:
-            sampler.status.print_status_final(f)
+            print_status_final(sampler.status, f)
 
         results = spotpy.analyser.load_csv_results(f"{path_to_out_folder}/SCEUA_monica_results_setup{setup_id}")
         fig = plt.figure(1, figsize=(9, 6))
