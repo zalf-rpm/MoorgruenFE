@@ -138,7 +138,7 @@ class spot_setup(object):
         self.cons_socket = self.context.socket(zmq.DEALER)
         self.shared_id = str(uuid.uuid4())
         self.cons_socket.setsockopt_string(zmq.ROUTING_ID, self.shared_id)
-        self.cons_socket.RCVTIMEO = 600000
+        self.cons_socket.RCVTIMEO = 60000
         self.cons_socket.connect(f"tcp://{monicas_host}:{monicas_out_port}")
 
         os.makedirs(self.path_to_out, exist_ok=True)
@@ -294,9 +294,9 @@ class spot_setup(object):
             try:
                 env = self._build_env_for_point(meta, params, sent_env_count)
 
-                if sent_env_count == 0:
-                    with open(f"{self.path_to_out}/first_env.json", "w") as f:
-                        json.dump(env, f, indent=2)
+                # if sent_env_count == 0:
+                #     with open(f"{self.path_to_out}/first_env.json", "w") as f:
+                #         json.dump(env, f, indent=2)
             except Exception as exc:
                 with open(self.path_to_prod_out_file, "a") as f:
                     f.write(f"Skipping point {exp_id}: {exc}\n")
