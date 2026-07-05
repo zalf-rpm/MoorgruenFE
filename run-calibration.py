@@ -107,11 +107,11 @@ def build_points_and_observations(config):
     for _, meta in meta_df.iterrows():
         exp_id = str(meta["Experiment"])
 
-        if not meta.get("Lat") or not meta.get("Long"):
+        if pd.isna(meta["Lat"]) or pd.isna(meta["Long"]):
             print(f"Skipping {exp_id}: missing Lat/Long")
             continue
 
-        if not meta.get("GrassmindRow") or not meta.get("GrassmindCol"):
+        if pd.isna(meta["GrassmindRow"]) or pd.isna(meta["GrassmindCol"]):
             print(f"Skipping {exp_id}: missing GrassmindRow/GrassmindCol")
             continue
 
@@ -170,8 +170,7 @@ def run_calibration(server=None, prod_port=None, cons_port=None):
         f.write(f"{datetime.now()} config: {config}\n")
 
     calib_points, observations_by_exp_year = build_points_and_observations(config)
-    print(f"Using {len(calib_points)} calibration points "
-          f"with {sum(len(v) for by_year in observations_by_exp_year.values() for v in by_year.values())} observations")
+    print(f"Using {len(calib_points)} calibration points with {n_obs} observations")
 
     if not calib_points:
         raise RuntimeError("No calibration points with matching Grassmind observations found.")
