@@ -170,6 +170,7 @@ def run_calibration(server=None, prod_port=None, cons_port=None):
         f.write(f"{datetime.now()} config: {config}\n")
 
     calib_points, observations_by_exp_year = build_points_and_observations(config)
+    n_obs = sum(len(obs_list) for yearly_obs in observations_by_exp_year.values() for obs_list in yearly_obs.values())
     print(f"Using {len(calib_points)} calibration points with {n_obs} observations")
 
     if not calib_points:
