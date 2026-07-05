@@ -10,11 +10,6 @@
             "residueParams": ["include-from-file", "crop-residues/Grass_Species4.json"]
         }
     },
-    "fert-params": {
-		"AN": ["include-from-file", "mineral-fertilisers/AN.json"],
-		"U": ["include-from-file", "mineral-fertilisers/U.json"],
-		"CAM": ["include-from-file", "organic-fertilisers/CAM.json"]
-	}, 
     "cropRotation": [
         {
             "worksteps": [
