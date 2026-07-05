@@ -106,6 +106,10 @@ def run_producer(server=None, port=None):
     metadata_df = pd.read_csv(os.path.join(paths["path-to-data-dir"], "Meta.csv"), sep=';')
     metadata_df["Crop"] = metadata_df["Crop"].astype(str).str.upper()
 
+    # Read groundwater
+    metadata_df["groundwaterMIN"] = pd.to_numeric(metadata_df["groundwaterMIN"], errors="coerce")
+    metadata_df["groundwaterMAX"] = pd.to_numeric(metadata_df["groundwaterMAX"], errors="coerce")
+
     df_gr = metadata_df[metadata_df["Crop"] == "GR"].copy()
 
     # Read setups
@@ -157,6 +161,11 @@ def run_producer(server=None, port=None):
         version = setup["version"]
         climate_base = setup["climate_path_to_csvs"]
 
+        groundwater_level = setup["groundwater-level"]
+
+        if groundwater_level not in {"FALSE", "MIN", "MAX", "MINMAX"}:
+            raise ValueError(f"Invalid groundwater-level '{groundwater_level}' in setup id {setup['id']}")
+
         for _, meta in df_gr.iterrows():
             # year = int(meta["Year"])
             start_date = str(setup["start_date"])
@@ -169,6 +178,14 @@ def run_producer(server=None, port=None):
 
             if meta["Soil"] not in soil_profiles:
                 print(f"Skipping {meta['Experiment']}: soil profile '{meta['Soil']}' not found in Soil.csv")
+                continue
+
+            if groundwater_level in {"MIN", "MINMAX"} and pd.isna(meta["groundwaterMIN"]):
+                print(f"Skipping {meta['Experiment']}: groundwaterMIN is missing")
+                continue
+
+            if groundwater_level in {"MAX", "MINMAX"} and pd.isna(meta["groundwaterMAX"]):
+                print(f"Skipping {meta['Experiment']}: groundwaterMAX is missing")
                 continue
 
             env = monica_io3.create_env_json_from_json_config({
@@ -207,6 +224,21 @@ def run_producer(server=None, port=None):
             env["params"]["siteParameters"]["SoilProfileParameters"] = soil_profiles[meta["Soil"]]
             env["params"]["siteParameters"]["HeightNN"] = float(meta['Elevation'])
             env["params"]["siteParameters"]["Latitude"] = float(meta['Lat'])
+
+            if groundwater_level == "MINMAX":
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = 3
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepth"] = [float(meta["groundwaterMIN"]), "m"]
+                env["params"]["userEnvironmentParameters"]["MaxGroundwaterDepth"] = [float(meta["groundwaterMAX"]), "m"]
+
+            elif groundwater_level == "MIN":
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = 3
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepth"] = [float(meta["groundwaterMIN"]), "m"]
+                env["params"]["userEnvironmentParameters"]["MaxGroundwaterDepth"] = [float(meta["groundwaterMIN"]), "m"]
+
+            elif groundwater_level == "MAX":
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = 3
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepth"] = [float(meta["groundwaterMAX"]), "m"]
+                env["params"]["userEnvironmentParameters"]["MaxGroundwaterDepth"] = [float(meta["groundwaterMAX"]), "m"]
 
             # Build worksteps
             ws_template = copy.deepcopy(env["cropRotation"][0]["worksteps"])

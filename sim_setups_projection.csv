@@ -1,4 +1,13 @@
-id,gcm,rcm,scenario,ensmem,version,start_date,end_date,climate_path_to_latlon_file,climate_path_to_csvs
-1,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp26,r12i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
-2,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp45,r12i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
-3,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp85,r12i1p1,v1,2021-01-01,2099-12-31,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+id,gcm,rcm,scenario,ensmem,version,start_date,end_date,groundwater-level,climate_path_to_latlon_file,climate_path_to_csvs
+1,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp26,r12i1p1,v1,2021-01-01,2099-12-31,FALSE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+2,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp45,r12i1p1,v1,2021-01-01,2099-12-31,FALSE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+3,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp85,r12i1p1,v1,2021-01-01,2099-12-31,FALSE,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+4,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp26,r12i1p1,v1,2021-01-01,2099-12-31,MIN,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+5,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp45,r12i1p1,v1,2021-01-01,2099-12-31,MIN,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+6,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp85,r12i1p1,v1,2021-01-01,2099-12-31,MIN,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+7,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp26,r12i1p1,v1,2021-01-01,2099-12-31,MAX,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+8,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp45,r12i1p1,v1,2021-01-01,2099-12-31,MAX,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+9,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp85,r12i1p1,v1,2021-01-01,2099-12-31,MAX,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+10,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp26,r12i1p1,v1,2021-01-01,2099-12-31,MINMAX,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+11,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp45,r12i1p1,v1,2021-01-01,2099-12-31,MINMAX,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
+12,ICHEC-EC-EARTH,CLMcom-CCLM4-8-17,rcp85,r12i1p1,v1,2021-01-01,2099-12-31,MINMAX,dwd_core_ensemble,dwd_core_ensemble/csvs_dwd_core_ensemble
