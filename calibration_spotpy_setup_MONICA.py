@@ -260,12 +260,28 @@ class spot_setup(object):
         if self.setup["O3"]:
             env["params"]["userEnvironmentParameters"]["AtmosphericO3"] = float(self.setup["O3"])
 
+        # Sow once
+        # ws_out = []
+        # for ws in env["cropRotation"][0]["worksteps"]:
+        #     ws_copy = copy.deepcopy(ws)
+        #     if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
+        #         ws_copy["date"] = f"{start_year}-{ws_copy['date'][5:]}"
+        #     ws_out.append(ws_copy)
+        # env["cropRotation"] = [{"worksteps": ws_out}]
+
+        # Sow every year
+        end_year = int(end_date[:4])
+
+        ws_template = copy.deepcopy(env["cropRotation"][0]["worksteps"])
         ws_out = []
-        for ws in env["cropRotation"][0]["worksteps"]:
-            ws_copy = copy.deepcopy(ws)
-            if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
-                ws_copy["date"] = f"{start_year}-{ws_copy['date'][5:]}"
-            ws_out.append(ws_copy)
+
+        for year in range(start_year, end_year + 1):
+            for ws in ws_template:
+                ws_copy = copy.deepcopy(ws)
+                if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
+                    ws_copy["date"] = f"{year}-{ws_copy['date'][5:]}"
+                ws_out.append(ws_copy)
+
         env["cropRotation"] = [{"worksteps": ws_out}]
 
         env["customId"] = {
