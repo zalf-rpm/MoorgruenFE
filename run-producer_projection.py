@@ -50,12 +50,12 @@ def run_producer(server=None, port=None):
         "mode": "re-local-remote",
         "server-port": port if port else "6667",
         "server": server if server else "login01.cluster.zalf.de",
-        "sim.json": os.path.join(os.path.dirname(__file__), "sim_proj.json"),
+        "sim.json": os.path.join(os.path.dirname(__file__), "sim_proj_ipp.json"),
         "crop.json": os.path.join(os.path.dirname(__file__), "crop.json"),
         "site.json": os.path.join(os.path.dirname(__file__), "site.json"),
         "path_to_out": "out/",
         "setups-file": "sim_setups_projection.csv",
-        "run-setups": "[1,2]",
+        "run-setups": "[9]",
     }
     shared.update_config(config, sys.argv, print_config=True, allow_new_keys=False)
 
@@ -241,16 +241,31 @@ def run_producer(server=None, port=None):
                 env["params"]["userEnvironmentParameters"]["MaxGroundwaterDepth"] = [float(meta["groundwaterMAX"]), "m"]
 
             # Build worksteps
+            # ws_template = copy.deepcopy(env["cropRotation"][0]["worksteps"])
+            # ws_out = []
+
+            # Sow only once
+            # for ws in ws_template:
+            #     ws_copy = copy.deepcopy(ws)
+            #     # if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
+            #     #     ws_copy["date"] = f"{year}-{ws_copy['date'][5:]}"
+            #     if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
+            #         ws_copy["date"] = f"{start_year}-{ws_copy['date'][5:]}"
+            #     ws_out.append(ws_copy)
+            #
+            # env["cropRotation"] = [{"worksteps": ws_out}]
+
+            # Sow every year
             ws_template = copy.deepcopy(env["cropRotation"][0]["worksteps"])
+            end_year = int(end_date[:4])
             ws_out = []
 
-            for ws in ws_template:
-                ws_copy = copy.deepcopy(ws)
-                # if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
-                #     ws_copy["date"] = f"{year}-{ws_copy['date'][5:]}"
-                if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
-                    ws_copy["date"] = f"{start_year}-{ws_copy['date'][5:]}"
-                ws_out.append(ws_copy)
+            for year in range(start_year, end_year + 1):
+                for ws in ws_template:
+                    ws_copy = copy.deepcopy(ws)
+                    if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
+                        ws_copy["date"] = f"{year}-{ws_copy['date'][5:]}"
+                    ws_out.append(ws_copy)
 
             env["cropRotation"] = [{"worksteps": ws_out}]
 
