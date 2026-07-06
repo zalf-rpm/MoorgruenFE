@@ -1,0 +1,71 @@
+{
+	"climate.csv": "",
+	"site.json": "",
+	"crop.json": "",
+	"climate.csv-options": {
+		"start-date": "0001-04-03",
+		"csv-separator": ",",
+		"no-of-climate-file-header-lines": 2,
+		"header-to-acd-names": {
+			"iso-date": "iso-date",
+			"tmin": "tmin",
+			"tavg": "tavg",
+			"tmax": "tmax",
+            "precip": "precip",
+            "relhumid": "relhumid",
+			"globrad": "globrad",
+			"wind": "wind"
+		}
+	},
+	"debug?": false,
+	"output": {
+		"write-file?": true,
+		"path-to-output": "",
+		"file-name": "sim-large.csv",
+		"obj-outputs?": true,
+		"csv-options": {
+			"include-header-row": true,
+			"include-units-row": true,
+			"csv-separator": ","
+		},
+		"events": [
+			"xxxx-06-15", [
+				"CM-count",
+				"Crop",
+				"Year",
+				["exportedCutBiomass|CutBiomass_06-15","LAST"],
+				"AbBiom|AbBiom_06-15",
+				["SOC|SOC_06-15", [1, 4, "SUM"]],
+				["Mois|Mois_06-15", [1, 5, "SUM"]],
+				"N2O|N2O_06-15",
+				"NLeach|NLeach_06-15",
+				["ET0|Eto_06-15", "SUM"],
+				["Pot_ET|Pot_ET_06-15", "SUM"]
+
+			],
+			"xxxx-09-01", [
+				"CM-count",
+				"Crop",
+				"Year",
+				["exportedCutBiomass|CutBiomass_09-01","LAST"],
+				"AbBiom|AbBiom_09-01",
+				["SOC|SOC_09-01", [1, 4, "SUM"]],
+				["Mois|Mois_09-01", [1, 5, "SUM"]],
+				["ET0|Eto_09-01", "SUM"],
+				["Pot_ET|Pot_ET_09-01", "SUM"],
+				"N2O|N2O_09-01",
+				"NLeach|NLeach_09-01"
+			]
+		]
+	},
+	"include-file-base-path": "data/",
+	"NitrogenResponseOn": true,
+	"EmergenceMoistureControlOn": false,
+	"EmergenceFloodingControlOn": false,
+	"WaterDeficitResponseOn": true,
+	"NumberOfLayers": 20,
+	"LayerThickness": [0.1, "m"],
+	"UseSecondaryYields": true,
+	"UseAutomaticIrrigation": false,
+	"UseNMinMineralFertilisingMethod": false
+}
