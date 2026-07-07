@@ -167,7 +167,6 @@ def run_producer(server=None, port=None):
             raise ValueError(f"Invalid groundwater-level '{groundwater_level}' in setup id {setup['id']}")
 
         for _, meta in df_gr.iterrows():
-            # year = int(meta["Year"])
             start_date = str(setup["start_date"])
             end_date = str(setup["end_date"])
             start_year = int(start_date[:4])
@@ -195,15 +194,9 @@ def run_producer(server=None, port=None):
                 "climate": ""
             })
 
-            # env["csvViaHeaderOptions"] = sim_json["climate.csv-options"]
-            # env["csvViaHeaderOptions"]["start-date"] = f"{year}-01-01"
-            # env["csvViaHeaderOptions"]["end-date"] = f"{year}-12-31"
-
             env["csvViaHeaderOptions"] = copy.deepcopy(sim_json["climate.csv-options"])
             env["csvViaHeaderOptions"]["start-date"] = start_date
             env["csvViaHeaderOptions"]["end-date"] = end_date
-
-            # env["pathToClimateCSV"] = f"{config['monica_path_to_climate_dir']}/weather/{meta['Weather']}.csv"
 
             lat = float(meta["Lat"])
             lon = float(meta["Long"])
@@ -241,18 +234,25 @@ def run_producer(server=None, port=None):
                 env["params"]["userEnvironmentParameters"]["MaxGroundwaterDepth"] = [float(meta["groundwaterMAX"]), "m"]
 
             # Build worksteps
-            # ws_template = copy.deepcopy(env["cropRotation"][0]["worksteps"])
-            # ws_out = []
-
             # Sow only once
-            # for ws in ws_template:
-            #     ws_copy = copy.deepcopy(ws)
-            #     # if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
-            #     #     ws_copy["date"] = f"{year}-{ws_copy['date'][5:]}"
-            #     if "date" in ws_copy and isinstance(ws_copy["date"], str) and len(ws_copy["date"]) >= 10:
-            #         ws_copy["date"] = f"{start_year}-{ws_copy['date'][5:]}"
-            #     ws_out.append(ws_copy)
+            # ws_template = copy.deepcopy(env["cropRotation"][0]["worksteps"])
+            # end_year = int(end_date[:4])
+            # ws_out = []
             #
+            # for ws in ws_template:
+            #     if ws["type"] == "Sowing":
+            #         ws_copy = copy.deepcopy(ws)
+            #         ws_copy["date"] = f"{start_year}-{ws_copy['date'][5:]}"
+            #         ws_out.append(ws_copy)
+            #
+            # for year in range(start_year, end_year + 1):
+            #     for ws in ws_template:
+            #         if ws["type"] == "Cutting":
+            #             ws_copy = copy.deepcopy(ws)
+            #             ws_copy["date"] = f"{year}-{ws_copy['date'][5:]}"
+            #             ws_out.append(ws_copy)
+            #
+            # ws_out.sort(key=lambda x: x["date"])
             # env["cropRotation"] = [{"worksteps": ws_out}]
 
             # Sow every year
