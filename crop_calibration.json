@@ -3,6 +3,7 @@
     "crops": {
         "RYE": {
             "is-winter-crop": false,
+            "is-perennial-crop": true,
             "cropParams": {
                 "species": ["include-from-file", "crops/species/Grass_Species4.json"],
                 "cultivar": ["include-from-file", "crops/cultivar/Grass_CLV4.json"]
