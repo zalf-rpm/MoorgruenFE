@@ -5,7 +5,7 @@
             "is-perennial-crop": true,
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/Grass_Species4.json"],
 			"cropParams": {
-				"cultivar": ["include-from-file", "monica-parameters/crops/cultivar/Grass_CLV4_rcp85.json"],
+				"cultivar": ["include-from-file", "monica-parameters/crops/cultivar/Grass_CLV4_rcp85_sowingonce.json"],
 				"species": ["include-from-file", "monica-parameters/crops/species/Grass_Species4.json"]
             }
 		}
