@@ -66,19 +66,20 @@ def run_consumer(server=None, port=None):
             writer = csv.writer(f, delimiter=",")
 
             if not file_exists:
-                if not file_exists:
-                    metrics = ["CutBiomass", "AbBiom", "SOC", "Mois", "N2O", "NLeach", "Eto", "Pot_ET"]
-                    header = ["Exp", "setup_id", "groundwater", "scenario", "Crop", "Year"]
-                    header += [f"{m}_06-15" for m in metrics]
-                    header += [f"{m}_09-01" for m in metrics]
-                    writer.writerow(header)
+                soc_layers = [f"SOC_Layer_{i}" for i in range(1, 5)]
+                metrics = ["CutBiomass", "AbBiom"] + soc_layers + ["Mois", "N2O", "NLeach", "Eto", "Pot_ET"]
+                header = ["Exp", "setup_id", "groundwater", "scenario", "Crop", "Year"]
+                header += [f"{m}_06-15" for m in metrics]
+                header += [f"{m}_09-01" for m in metrics]
+                writer.writerow(header)
 
             writer.writerows(rows)
 
     no_of_gr_ids_to_receive = None
     no_of_gr_ids_received = 0
 
-    metrics = ["CutBiomass", "AbBiom", "SOC", "Mois", "N2O", "NLeach", "Eto", "Pot_ET"]
+    soc_layers = [f"SOC_Layer_{i}" for i in range(1, 5)]
+    metrics = ["CutBiomass", "AbBiom"] + soc_layers + ["Mois", "N2O", "NLeach", "Eto", "Pot_ET"]
     pending_rows = {}
 
     while no_of_gr_ids_to_receive is None or no_of_gr_ids_received < no_of_gr_ids_to_receive:
@@ -116,8 +117,6 @@ def run_consumer(server=None, port=None):
                 f"{os.path.basename(__file__)} received result experiment: {exp_id} "
             )
 
-            # rows_to_write = []
-
             # Process data from the message
             for data in msg.get("data", []):
                 for vals in data.get("results", []):
@@ -134,12 +133,18 @@ def run_consumer(server=None, port=None):
                         {
                             "Exp": exp_id,
                             "setup_id": setup_id,
-                            "groundwater": "MINMAX",
+                            "groundwater": "MIN",
                             "scenario": scenario,
                             "Crop": vals.get("Crop"),
                             "Year": vals.get("Year"),
                         },
                     )
+
+                    for date_suffix in ["06-15", "09-01"]:
+                        soc_values = vals.get(f"SOC_{date_suffix}")
+                        if soc_values is not None:
+                            for i, soc in enumerate(soc_values, start=1):
+                                rec[f"SOC_Layer_{i}_{date_suffix}"] = soc
 
                     for m in metrics:
                         k06 = f"{m}_06-15"
