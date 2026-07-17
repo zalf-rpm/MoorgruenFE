@@ -109,6 +109,7 @@ def run_producer(server=None, port=None):
     # Read groundwater
     metadata_df["groundwaterMIN"] = pd.to_numeric(metadata_df["groundwaterMIN"], errors="coerce")
     metadata_df["groundwaterMAX"] = pd.to_numeric(metadata_df["groundwaterMAX"], errors="coerce")
+    metadata_df["groundwaterMonth"] = pd.to_numeric(metadata_df["groundwaterMonth"], errors="coerce").astype("Int64")
 
     df_gr = metadata_df[metadata_df["Crop"] == "GR"].copy()
 
@@ -187,6 +188,10 @@ def run_producer(server=None, port=None):
                 print(f"Skipping {meta['Experiment']}: groundwaterMAX is missing")
                 continue
 
+            if groundwater_level != "FALSE" and pd.isna(meta["groundwaterMonth"]):
+                print(f"Skipping {meta['Experiment']}: groundwaterMONTH is missing")
+                continue
+
             env = monica_io3.create_env_json_from_json_config({
                 "crop": crop_json,
                 "site": site_json,
@@ -219,17 +224,17 @@ def run_producer(server=None, port=None):
             env["params"]["siteParameters"]["Latitude"] = float(meta['Lat'])
 
             if groundwater_level == "MINMAX":
-                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = 3
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = int(meta["groundwaterMonth"])
                 env["params"]["userEnvironmentParameters"]["MinGroundwaterDepth"] = [float(meta["groundwaterMIN"]), "m"]
                 env["params"]["userEnvironmentParameters"]["MaxGroundwaterDepth"] = [float(meta["groundwaterMAX"]), "m"]
 
             elif groundwater_level == "MIN":
-                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = 3
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = int(meta["groundwaterMonth"])
                 env["params"]["userEnvironmentParameters"]["MinGroundwaterDepth"] = [float(meta["groundwaterMIN"]), "m"]
                 env["params"]["userEnvironmentParameters"]["MaxGroundwaterDepth"] = [float(meta["groundwaterMIN"]), "m"]
 
             elif groundwater_level == "MAX":
-                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = 3
+                env["params"]["userEnvironmentParameters"]["MinGroundwaterDepthMonth"] = int(meta["groundwaterMonth"])
                 env["params"]["userEnvironmentParameters"]["MinGroundwaterDepth"] = [float(meta["groundwaterMAX"]), "m"]
                 env["params"]["userEnvironmentParameters"]["MaxGroundwaterDepth"] = [float(meta["groundwaterMAX"]), "m"]
 
