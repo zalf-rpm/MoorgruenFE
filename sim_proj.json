@@ -53,10 +53,11 @@
 	"NitrogenResponseOn": true,
 	"EmergenceMoistureControlOn": false,
 	"EmergenceFloodingControlOn": false,
+	"FrostKillOn": false,
 	"WaterDeficitResponseOn": true,
 	"NumberOfLayers": 20,
 	"LayerThickness": [0.1, "m"],
-	"UseSecondaryYields": true,
+	"UseSecondaryYields": false,
 	"UseAutomaticIrrigation": false,
 	"UseNMinMineralFertilisingMethod": false
 }
