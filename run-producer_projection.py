@@ -76,7 +76,7 @@ def run_producer(server=None, port=None):
     fert_min_template = crop_json.pop("fert_min_template")
 
     # Read soil data
-    soil_df = pd.read_csv(os.path.join(paths["path-to-data-dir"], "Soil.csv"), sep=';')
+    soil_df = pd.read_csv(os.path.join(paths["path-to-data-dir"], "Soil2.csv"), sep=';')
 
     soil_profiles = defaultdict(list)
     prev_depth_m = 0
@@ -93,17 +93,19 @@ def run_producer(server=None, port=None):
 
         layer = {
             "Thickness": [thickness, "m"],
-            "SoilBulkDensity": [float(row['Bulk_density']) , "kg/m3"],
+            "SoilBulkDensity": float(row['Bulk_density']),  # kg m-3
             "SoilOrganicCarbon": [float(row['Corg']), "%"],
-            "Clay": [float(row['Clay']), "m3/m3"],
-            "Sand": [float(row['Sand']), "m3/m3"],
-            "Silt": [float(row['Silt']), "m3/m3"],
-            # "pH": [float(row['pH']), "pH"]
+            "Clay": float(row['Clay']),  # fraction [0-1]
+            "PoreVolume": float(row["Sat"]),  # fraction [0-1]
+            "FieldCapacity": float(row["Fc"]),  # fraction [0-1]
+            "PermanentWiltingPoint": float(row["Pwp"]),  # fraction [0-1]
+            # "Sand": [float(row['Sand']), "m3/m3"],
+            # "pH": [float(row['pH']), "pH"],
         }
         soil_profiles[soil_name].append(layer)
 
     # Read metadata and management
-    metadata_df = pd.read_csv(os.path.join(paths["path-to-data-dir"], "Meta.csv"), sep=';')
+    metadata_df = pd.read_csv(os.path.join(paths["path-to-data-dir"], "Meta2.csv"), sep=';')
     metadata_df["Crop"] = metadata_df["Crop"].astype(str).str.upper()
 
     # Read groundwater
@@ -138,8 +140,8 @@ def run_producer(server=None, port=None):
                                                                                            wgs84_crs, cdict)
 
     # Skip experiments
-    skip_experiments = {"EX174", "EX175", "EX176", "EX177"}
-    df_gr = df_gr[~df_gr["Experiment"].astype(str).isin(skip_experiments)].copy()
+    # skip_experiments = {"EX174", "EX175", "EX176", "EX177"}
+    # df_gr = df_gr[~df_gr["Experiment"].astype(str).isin(skip_experiments)].copy()
 
     # Test
     # TEST_EXPERIMENT = "EX1"
