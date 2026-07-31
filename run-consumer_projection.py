@@ -57,12 +57,6 @@ def run_consumer(server=None, port=None):
 
     cbal_header_row = [f"CBal_{i}" for i in range (1, 5)]
     soc_header_row = [f"SOC_{i}" for i in range(1, 21)]
-    # socxy_header_row = [f"SOC-X-Y_{i}" for i in range(1, 21)]
-    socxy_header_row = [
-        "SOC-X-Y_30cm",
-        "SOC-X-Y_60cm",
-        "SOC-X-Y_90cm",
-    ]
 
     def write_rows_for_result(setup_id, exp_id, rows):
         setup_dir = os.path.join(path_to_out_dir, f"setup_{setup_id}")
@@ -91,8 +85,11 @@ def run_consumer(server=None, port=None):
                                  "Ra",
                                  "RaRoot",
                                  "RaLeaf",
-                                 "RaShoot"
-                                 ] + cbal_header_row + soc_header_row + socxy_header_row)
+                                 "RaShoot",
+                                 "sum_SOC_1-4",
+                                 "N2O",
+                                 "NLeach",
+                                 ] + cbal_header_row + soc_header_row)
 
             writer.writerows(rows)
 
@@ -147,12 +144,6 @@ def run_consumer(server=None, port=None):
                 for vals in results:
                     cbal_data = vals.get("CBal", [])
                     soc_data = vals.get("SOC", [])
-                    # socxy_data = vals.get("SOC-X-Y", [])
-                    socxy_data = [
-                        vals.get("SOC-X-Y_30cm"),
-                        vals.get("SOC-X-Y_60cm"),
-                        vals.get("SOC-X-Y_90cm"),
-                    ]
 
                     row = [exp_id,
                            setup_id,
@@ -170,8 +161,11 @@ def run_consumer(server=None, port=None):
                            vals.get("Ra"),
                            vals.get("RaRoot"),
                            vals.get("RaLeaf"),
-                           vals.get("RaShoot")
-                           ] + cbal_data + soc_data + socxy_data
+                           vals.get("RaShoot"),
+                           vals.get("sum_SOC_1-4"),
+                           vals.get("N2O"),
+                           vals.get("NLeach")
+                           ] + cbal_data + soc_data
                     rows_to_write.append(row)
 
             write_rows_for_result(setup_id, exp_id, rows_to_write)
