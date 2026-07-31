@@ -10,7 +10,8 @@
         "HeightNN": [
             0.0,
             "m"
-        ]
+        ],
+        "pwpFcSatFunction": "VanGenuchten"
     },
     "SoilTemperatureParameters": [
         "include-from-file",
