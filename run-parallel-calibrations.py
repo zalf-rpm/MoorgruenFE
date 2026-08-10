@@ -47,7 +47,7 @@ def run_parallel_calibrations(server=None, prod_port=None, cons_port=None):
         "rcp": "26",
         "path_to_grassmind_biomass_files": "/beegfs/rpm/projects/monica/project/MoorGruenFE/rcp{rcp}/",
         # "observation_filename_template": "parameter_R{row}C{col}I41.bt"
-        "observation_filename_template": "parameter_R{row}C{col}_S4I41.bt"
+        "observation_filename_template": "parameter_R{row}C{col}_S{soil}I41.bt"
     }
 
     update_config(config, sys.argv, print_config=True, allow_new_keys=False)

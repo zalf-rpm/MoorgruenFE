@@ -111,16 +111,18 @@ def build_points_and_observations(config):
             print(f"Skipping {exp_id}: missing Lat/Long")
             continue
 
-        if pd.isna(meta["GrassmindRow"]) or pd.isna(meta["GrassmindCol"]):
-            print(f"Skipping {exp_id}: missing GrassmindRow/GrassmindCol")
+        if pd.isna(meta["GrassmindRow"]) or pd.isna(meta["GrassmindCol"]) or pd.isna(meta["GrassmindSoil"]):
+            print(f"Skipping {exp_id}: missing GrassmindRow/GrassmindCol/GrassmindSoil")
             continue
 
         row = int(float(meta["GrassmindRow"]))
         col = int(float(meta["GrassmindCol"]))
+        soil = meta["GrassmindSoil"]
 
         obs_file = config["observation_filename_template"].format(
             row=row,
             col=col,
+            soil=soil,
             experiment=exp_id,
         )
 
@@ -194,9 +196,10 @@ def run_calibration(server=None, prod_port=None, cons_port=None):
         "path_to_out": "out/",
         "run-setups": "[1]",
         "repetitions": "2000",
-        "path_to_meta_csv": "./data/Meta.csv",
+        "path_to_meta_csv": "./data/Meta2.csv",
         "path_to_grassmind_biomass_files": None,
-        "observation_filename_template": "parameter_R{row}C{col}I41.bt",
+        # "observation_filename_template": "parameter_R{row}C{col}I41.bt",
+        "observation_filename_template": "parameter_R{row}C{col}_S{soil}I41.bt"
     }
     update_config(config, sys.argv, print_config=True, allow_new_keys=False)
 
