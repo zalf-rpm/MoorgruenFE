@@ -42,10 +42,12 @@ def run_parallel_calibrations(server=None, prod_port=None, cons_port=None):
         "run-setup": "1",
         "path_to_python": "python" if local_run else "/home/rpm/.conda/envs/clim4cast/bin/python",
         "repetitions": "10",
-        "path_to_meta_csv": "./data/Meta.csv",
+        # "path_to_meta_csv": "./data/Meta.csv",
+        "path_to_meta_csv": "./data/Meta2.csv",
         "rcp": "26",
         "path_to_grassmind_biomass_files": "/beegfs/rpm/projects/monica/project/MoorGruenFE/rcp{rcp}/",
-        "observation_filename_template": "parameter_R{row}C{col}I41.bt"
+        # "observation_filename_template": "parameter_R{row}C{col}I41.bt"
+        "observation_filename_template": "parameter_R{row}C{col}_S4I41.bt"
     }
 
     update_config(config, sys.argv, print_config=True, allow_new_keys=False)

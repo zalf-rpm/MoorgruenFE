@@ -54,7 +54,8 @@ PATHS = {
     }
 }
 
-DATA_SOIL = "data/Soil.csv"
+# DATA_SOIL = "data/Soil.csv"
+DATA_SOIL = "data/Soil2.csv"
 
 TEMPLATE_PATH_LATLON = "{path_to_climate_dir}/latlon-to-rowcol.json"
 TEMPLATE_PATH_CLIMATE_CSV = "{gcm}/{rcm}/{scenario}/{ensmem}/{version}/row-{crow}/col-{ccol}.csv"
@@ -87,11 +88,15 @@ def read_soil_profiles(path_to_soil_csv):
 
         soil_profiles[soil_name].append({
             "Thickness": [thickness, "m"],
-            "SoilBulkDensity": [float(row["Bulk_density"]), "kg/m3"],
-            "SoilOrganicCarbon": [float(row["Corg"]), "%"],
-            "Clay": [float(row["Clay"]), "m3/m3"],
-            "Sand": [float(row["Sand"]), "m3/m3"],
-            "Silt": [float(row["Silt"]), "m3/m3"],
+            "SoilBulkDensity": float(row['Bulk_density']),  # kg m-3
+            "SoilOrganicCarbon": [float(row['Corg']), "%"],
+            "PoreVolume": float(row["Sat"]),  # fraction [0-1]
+            "FieldCapacity": float(row["Fc"]),  # fraction [0-1]
+            "PermanentWiltingPoint": float(row["Pwp"]),  # fraction [0-1]
+            "KA5TextureClass": row["KA5"]
+            # "Clay": float(row['Clay']),  # fraction [0-1]
+            # "Sand": [float(row['Sand']), "m3/m3"],
+            # "pH": [float(row['pH']), "pH"],
         })
     return soil_profiles
 
